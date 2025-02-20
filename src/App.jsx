@@ -39,7 +39,7 @@ export default function App() {
       const { total, sent } = response.data;
       setProgress({ sent, total });
       setMessage(`Emails sent: ${sent} out of ${total}`);
-      setAlert(`Sending emails... ${progress.sent} out of ${progress.total}`)
+      setAlert(`Sending emails... ${sent} out of ${total}`)
       setFile(null)
     } catch (error) {
       setMessage('Error uploading file or sending emails');
