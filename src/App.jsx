@@ -30,7 +30,7 @@ const handleSubmit = async (e) => {
   formData.append('excelFile', file);
 
   try {
-    const response = await fetch('https://uan-activation-reminder-server.vercel.app/upload', {
+    const response = await fetch('https://uan-activation-reminder-server.onrender.com/upload', {
       method: 'POST',
       body: formData,
     });
