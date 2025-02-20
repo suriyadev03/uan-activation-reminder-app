@@ -1,0 +1,91 @@
+/* General Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  font-family: 'Arial', sans-serif;
+}
+
+/* Container */
+.container {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 16px;
+  text-align: center;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.file-input {
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.submit-button {
+  background-color: #4caf50;
+  color: white;
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+  background-color: #45a049;
+}
+
+.progress,
+.message {
+  margin-top: 12px;
+  font-size: 16px;
+  text-align: center;
+}
+
+.progress {
+  color: #2196f3;
+}
+
+.message {
+  color: green;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+    padding: 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .file-input,
+  .submit-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .progress,
+  .message {
+    font-size: 14px;
+  }
+}
