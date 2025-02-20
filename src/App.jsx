@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { dotSpinner } from 'ldrs';
 
 export default function App() {
   const [file, setFile] = useState(null);
@@ -10,7 +11,9 @@ export default function App() {
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-
+  useEffect(() => {
+    dotSpinner.register();
+}, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -44,14 +47,16 @@ export default function App() {
   };
 
   return (
+    <div className='main'>
     <div className="container">
-      <h1 className="title">Upload Excel File to Send Emails</h1>
+      <h1 className="title">Upload Excel File to Send Reminder</h1>
       <form onSubmit={handleSubmit} className="form">
         <input type="file" onChange={handleFileChange} accept=".xlsx, .xls" required className="file-input" />
-        <button type="submit" className="submit-button">Upload & Send Emails</button>
+        <button type="submit" className="submit-button" disabled={!file}><span>Upload & Send Emails </span> {isSending && <l-dot-spinner size="40" speed="0.9" color="white" ></l-dot-spinner>}</button>
       </form>
-      {isSending && <p className="progress">Sending emails... {progress.sent} out of {progress.total}</p>}
+      {isSending && progress.sent > 0 && <p className="progress">Sending emails... {progress.sent} out of {progress.total}</p>}
       {message && <p className="message">{message}</p>}
+    </div>
     </div>
   );
 }

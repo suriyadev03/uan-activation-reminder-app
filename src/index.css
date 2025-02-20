@@ -3,17 +3,24 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-
-  font-family: 'Arial', sans-serif;
+  font-family: "Poppins";
 }
-
+.main{
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 /* Container */
 .container {
   max-width: 600px;
   margin: 40px auto;
   padding: 20px;
   background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0px 0px 38px -7px rgba(102,102,102,1);
+  -moz-box-shadow: 0px 0px 38px -7px rgba(102,102,102,1);
+  box-shadow: 0px 0px 38px -7px rgba(102,102,102,1);
   border-radius: 12px;
 }
 
@@ -31,7 +38,7 @@
 }
 
 .file-input {
-  padding: 12px;
+  padding: 20px;
   border: 1px solid #ddd;
   border-radius: 8px;
   font-size: 16px;
@@ -45,13 +52,25 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  text-align: center;
+  transition: background-color 0.3sease;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  height: 60px;
+  font-weight: bold;
 }
-
-.submit-button:hover {
+.submit-button>span{
+  margin-right: 10px;
+}
+.submit-button:not(:disabled):hover {
   background-color: #45a049;
 }
-
+button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
 .progress,
 .message {
   margin-top: 12px;
