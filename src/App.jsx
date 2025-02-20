@@ -1,10 +1,8 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { dotSpinner } from 'ldrs';
 
 export default function App() {
   const [file, setFile] = useState(null);
-  const [progress, setProgress] = useState({ sent: 0, total: 0 });
   const [isSending, setIsSending] = useState(false);
   const [message, setMessage] = useState('');
   const [alert, setAlert] = useState('');
@@ -23,8 +21,8 @@ const handleSubmit = async (e) => {
     return;
   }
   setAlert('');
+  setMessage('')
   setIsSending(true);
-  setProgress({ sent: 0, total: 0 });
 
   const formData = new FormData();
   formData.append('excelFile', file);
@@ -59,11 +57,10 @@ const handleSubmit = async (e) => {
           const parsed = JSON.parse(line);
           if (parsed.sentCount !== undefined) {
             sent = parsed.sentCount;
-            setProgress({ sent, total });
             setAlert(`Sending emails... ${sent} out of ${total}`);
+            if(sent === total) setMessage('All Reminder Sent Successfully')
           } else if (parsed.total !== undefined) {
             total = parsed.total;
-            setProgress({ sent, total });
           }
         } catch (err) {
           console.error('Failed to parse line', line, err);
@@ -91,8 +88,8 @@ const handleSubmit = async (e) => {
         <button type="submit" className="submit-button" disabled={!file}><span>Upload & Send Emails </span> {isSending && <l-dot-spinner size="40" speed="0.9" color="white" ></l-dot-spinner>}</button>
       </form>
       {/* <p className="progress">{alert}</p> */}
-      {/* {message && <p className="message">{alert}</p>} */}
       <p className="message">{alert}</p>
+      <p className="progress">{message}</p>
     </div>
     </div>
   );
