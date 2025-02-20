@@ -26,7 +26,7 @@ export default function App() {
     formData.append('excelFile', file);
 
     try {
-      const response = await axios.post('http://localhost:3000/upload', formData, {
+      const response = await axios.post('https://uan-activation-reminder-server.vercel.app/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
