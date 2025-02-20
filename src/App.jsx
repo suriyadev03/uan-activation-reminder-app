@@ -7,8 +7,10 @@ export default function App() {
   const [progress, setProgress] = useState({ sent: 0, total: 0 });
   const [isSending, setIsSending] = useState(false);
   const [message, setMessage] = useState('');
+  const [alert, setAlert] = useState('');
 
   const handleFileChange = (e) => {
+    console.log("file",file);
     setFile(e.target.files[0]);
   };
   useEffect(() => {
@@ -16,12 +18,11 @@ export default function App() {
 }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!file) {
       setMessage('Please select a file');
       return;
     }
-
+    setAlert('')
     setIsSending(true);
     setProgress({ sent: 0, total: 0 });
 
@@ -38,11 +39,14 @@ export default function App() {
       const { total, sent } = response.data;
       setProgress({ sent, total });
       setMessage(`Emails sent: ${sent} out of ${total}`);
+      setAlert(`Sending emails... ${progress.sent} out of ${progress.total}`)
+      setFile(null)
     } catch (error) {
       setMessage('Error uploading file or sending emails');
       console.error(error);
     } finally {
       setIsSending(false);
+      setFile(null)
     }
   };
 
@@ -54,8 +58,8 @@ export default function App() {
         <input type="file" onChange={handleFileChange} accept=".xlsx, .xls" required className="file-input" />
         <button type="submit" className="submit-button" disabled={!file}><span>Upload & Send Emails </span> {isSending && <l-dot-spinner size="40" speed="0.9" color="white" ></l-dot-spinner>}</button>
       </form>
-      {isSending && progress.sent > 0 && <p className="progress">Sending emails... {progress.sent} out of {progress.total}</p>}
-      {message && <p className="message">{message}</p>}
+      {/* <p className="progress">{alert}</p> */}
+      {message && <p className="message">{alert}</p>}
     </div>
     </div>
   );
