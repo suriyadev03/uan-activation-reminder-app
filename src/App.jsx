@@ -8,8 +8,9 @@ export default function App() {
   const [alert, setAlert] = useState('');
 
   const handleFileChange = (e) => {
-    console.log("file",file);
     setFile(e.target.files[0]);
+    setAlert('');
+    setMessage('');
   };
   useEffect(() => {
     dotSpinner.register();
@@ -20,15 +21,14 @@ const handleSubmit = async (e) => {
     setMessage('Please select a file');
     return;
   }
-  setAlert('');
-  setMessage('')
+
   setIsSending(true);
 
   const formData = new FormData();
   formData.append('excelFile', file);
 
   try {
-    const response = await fetch('https://uan-activation-reminder-server.onrender.com/upload', {
+    const response = await fetch('http://localhost:3000/upload', {
       method: 'POST',
       body: formData,
     });
@@ -46,29 +46,37 @@ const handleSubmit = async (e) => {
     while (true) {
       const { done, value } = await reader.read();
       if (done) break;
-
+    
       const chunk = decoder.decode(value, { stream: true });
-
+    
       // Each line in the stream is a JSON object
       const lines = chunk.trim().split('\n');
-
+    
       for (const line of lines) {
         try {
           const parsed = JSON.parse(line);
+    
           if (parsed.sentCount !== undefined) {
             sent = parsed.sentCount;
             setAlert(`Sending emails... ${sent} out of ${total}`);
-            if(sent === total) setMessage('All Reminder Sent Successfully')
-          } else if (parsed.total !== undefined) {
+            if (sent === total) setMessage('All Reminders Sent Successfully');
+          } 
+          else if (parsed.total !== undefined) {
             total = parsed.total;
+          } 
+          else if (parsed.error) {
+            console.error(`Error: ${parsed.error}`);
+            setAlert(`Error: ${parsed.error}`);
           }
         } catch (err) {
-          console.error('Failed to parse line', line, err);
+          console.log("Error parsing response:", line, err);
         }
       }
     }
+    
 
-    setMessage(`Emails sent: ${sent} out of ${total}`);
+    if(sent > 0 ) setAlert(`Emails sent: ${sent} out of ${total}`);
+    if(sent === total) setMessage('All Reminder Sent Successfully')
   } catch (error) {
     setMessage('Error uploading file or sending emails');
     console.error(error);
