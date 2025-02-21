@@ -67,6 +67,8 @@ const handleSubmit = async (e) => {
           else if (parsed.error) {
             console.error(`Error: ${parsed.error}`);
             setAlert(`Error: ${parsed.error}`);
+            setIsSending(false);
+            // setFile(null)
           }
         } catch (err) {
           console.log("Error parsing response:", line, err);
